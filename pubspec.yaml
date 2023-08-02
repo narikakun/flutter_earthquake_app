@@ -92,3 +92,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/hypo.png
+    - assets/int/int_s1.png
+    - assets/int/int_s2.png
+    - assets/int/int_s3.png
+    - assets/int/int_s4.png
+    - assets/int/int_s5.png
+    - assets/int/int_s6.png
+    - assets/int/int_s7.png
+    - assets/int/int_s8.png
+    - assets/int/int_s9.png

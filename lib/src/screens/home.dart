@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../widget/EarthquakeMap.dart';
 import '../widget/createProgressIndicator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -61,6 +62,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: _earthquakeData.containsKey("Control")?[
               ListTile(
                 title: Text(title),
@@ -89,10 +91,13 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text(_earthquakeData["Body"]["Intensity"]["Observation"]["MaxInt"]),
                   ),
                 ]:[],
-              )
+              ),
+                Expanded(
+                  child: EarthquakeMap(_earthquakeData),
+                ),
             ]:[],
           ),
-        )
+        ),
     );
   }
 }

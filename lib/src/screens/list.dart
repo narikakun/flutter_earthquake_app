@@ -33,7 +33,7 @@ class _ListPageState extends State<ListPage> {
       jsonDecode(utf8.decode(response.bodyBytes));
       Map<String, dynamic> datasUrls = {};
       Map<String, dynamic> datas = {};
-      for (String dataUrl in sentences["lists"]) {
+      for (String dataUrl in sentences["lists"].toList().reversed) {
         List<String> dataSplit = dataUrl.split("/");
         String fileName = dataSplit[dataSplit.length-1];
         List<String> fileSplit = fileName.split("_");
@@ -82,7 +82,7 @@ class _ListPageState extends State<ListPage> {
         ),
         body: ListView(
           children: <Widget>[
-            for (var urlKey in _dataUrls.keys.toList().reversed)
+            for (var urlKey in _dataUrls.keys.toList())
               GestureDetector(
                 onTap: () {
                   Navigator.push(
