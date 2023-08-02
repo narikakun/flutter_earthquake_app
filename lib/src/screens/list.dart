@@ -40,7 +40,7 @@ class _ListPageState extends State<ListPage> {
         datasUrls[fileSplit[2]] = dataUrl;
         if (datasUrls.length > 10) break;
       }
-      datasUrls["20210213230800"] = "https://files.nakn.jp/earthquake/json2/2021/2/earthquake_VXSE53_20210213230800_2.json";
+      //datasUrls["20210213230800"] = "https://files.nakn.jp/earthquake/json2/2021/2/earthquake_VXSE53_20210213230800_2.json";
       for (var entry in datasUrls.entries) {
         final response = await http.get(Uri.parse(
             entry.value));
