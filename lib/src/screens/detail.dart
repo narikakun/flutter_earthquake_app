@@ -69,7 +69,7 @@ class _DetailPageState extends State<DetailPage> {
         children: <Widget>[
           QuakeListCard(_data),
           Expanded(
-            child: EarthquakeMap(_data),
+            child: EarthquakeMap(data: _data),
           ),
         ],
       ),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../widget/EarthquakeMap.dart';
+import '../widget/QuakeListCard.dart';
 import '../widget/createProgressIndicator.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -60,43 +61,14 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text("最新の地震情報"),
         ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: _earthquakeData.containsKey("Control")?[
-              ListTile(
-                title: Text(title),
-                subtitle: Text(_earthquakeData["Body"]["Comments"]["Observation"]),
-              ),
-              Column(
-                children: (title=="震源に関する情報"||title=="震源・震度に関する情報")?[
-                  ListTile(
-                    title: const Text("震源地"),
-                    subtitle: Text(_earthquakeData["Body"]["Earthquake"]["Hypocenter"]["Name"]),
-                  ),
-                  ListTile(
-                    title: const Text("震源の深さ"),
-                    subtitle: Text(_earthquakeData["Body"]["Earthquake"]["Hypocenter"]["Depth"] + "km"),
-                  ),
-                  ListTile(
-                    title: const Text("マグニチュード"),
-                    subtitle: Text('M${_earthquakeData["Body"]["Earthquake"]["Magnitude"]}'),
-                  ),
-                ]:[],
-              ),
-              Column(
-                children: (title=="震度速報"||title=="震源・震度に関する情報")?[
-                  ListTile(
-                    title: const Text("最大震度"),
-                    subtitle: Text(_earthquakeData["Body"]["Intensity"]["Observation"]["MaxInt"]),
-                  ),
-                ]:[],
-              ),
-                Expanded(
-                  child: EarthquakeMap(_earthquakeData),
-                ),
-            ]:[],
-          ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            QuakeListCard(_earthquakeData),
+            Expanded(
+              child: EarthquakeMap(data: _earthquakeData),
+            ),
+          ],
         ),
     );
   }
