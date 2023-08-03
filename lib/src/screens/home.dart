@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         appBar: AppBar(
           title: const Text("最新の地震情報"),
+          elevation: 1,
         ),
         body: createProgressIndicator()
       );
@@ -60,6 +61,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         appBar: AppBar(
           title: const Text("最新の地震情報"),
+          elevation: 1,
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

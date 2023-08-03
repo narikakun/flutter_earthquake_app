@@ -156,7 +156,7 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
             onPositionChanged: (position, bo) {
               setMapView(position.zoom);
             },
-
+            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
           ),
           nonRotatedChildren: [
             RichAttributionWidget(

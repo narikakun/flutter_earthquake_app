@@ -56,6 +56,7 @@ class _DetailPageState extends State<DetailPage> {
       return Scaffold(
           appBar: AppBar(
             title: const Text("地震の詳細"),
+            elevation: 1,
           ),
           body: createProgressIndicator()
       );
@@ -63,6 +64,7 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("地震の詳細"),
+        elevation: 1,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
