@@ -25,15 +25,17 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  List<dynamic> _dataList = [];
+  Map<String, dynamic> _dataJson = {};
+  String _minInt = "1";
+
   void fetchSentence() async {
     final response = await http.get(Uri.parse(
-        'https://earthquake-api-v2.nakn.jp/api/v2/list?limit=10'));
+        'https://earthquake-api-v2.nakn.jp/api/v2/list?limit=10&minInt=$_minInt'));
     if (response.statusCode == 200) {
       Map<String, dynamic> dataJson =
       jsonDecode(utf8.decode(response.bodyBytes));
       setState(() {
-        _dataList = dataJson["items"];
+        _dataJson = dataJson;
       });
     } else {
       throw Exception('Failed to load dataJson');
@@ -48,7 +50,7 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_dataList.isEmpty) {
+    if (_dataJson.isEmpty) {
       return Scaffold(
           appBar: AppBar(
             title: const Text("履歴"),
@@ -64,18 +66,20 @@ class _ListPageState extends State<ListPage> {
           actions: [
             IconButton(
               icon: const Icon(Icons.filter_list),
-              onPressed: () => {
-              Navigator.push(
-                context,
-                  MaterialPageRoute(builder: (context) => ListFilterScreen()),
-                )
+              onPressed: () async {
+                var result = await Navigator.push(
+                  context,
+                    MaterialPageRoute(builder: (context) => ListFilterScreen(minIntStr: _minInt)),
+                  );
+                _minInt = result["minInt"];
+                fetchSentence();
               },
             ),
           ],
         ),
         body: ListView(
           children: <Widget>[
-            for (var data in _dataList)
+            for (var data in _dataJson["items"])
               GestureDetector(
                 onTap: () {
                   Navigator.push(
