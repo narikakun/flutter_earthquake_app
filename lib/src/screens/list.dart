@@ -6,6 +6,7 @@ import 'package:earthquake_app/src/widget/QuakeListCard.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../widget/QuakeEListCard.dart';
 import '../widget/createProgressIndicator.dart';
 
 class ListScreen extends StatelessWidget {
@@ -25,36 +26,15 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
-  Map<String, dynamic> _dataUrls = {};
+  List<dynamic> _dataList = [];
   void fetchSentence() async {
     final response = await http.get(Uri.parse(
-        'https://ntool.online/api/earthquakeList'));
+        'https://earthquake-api-v2.nakn.jp/api/v2/list?limit=10'));
     if (response.statusCode == 200) {
       Map<String, dynamic> sentences =
       jsonDecode(utf8.decode(response.bodyBytes));
-      Map<String, dynamic> datasUrls = {};
-      Map<String, dynamic> datas = {};
-      for (String dataUrl in sentences["lists"].toList().reversed) {
-        List<String> dataSplit = dataUrl.split("/");
-        String fileName = dataSplit[dataSplit.length-1];
-        List<String> fileSplit = fileName.split("_");
-        datasUrls[fileSplit[2]] = dataUrl;
-        if (datasUrls.length > 10) break;
-      }
-      for (var entry in datasUrls.entries) {
-        final response = await http.get(Uri.parse(
-            entry.value));
-        if (response.statusCode == 200) {
-          Map<String, dynamic> data =
-          jsonDecode(utf8.decode(response.bodyBytes));
-          data["url"] = entry.value;
-          datas[entry.key] = data;
-        } else {
-          throw Exception('Failed to load sentence');
-        }
-      }
       setState(() {
-        _dataUrls = datas;
+        _dataList = sentences["items"];
       });
     } else {
       throw Exception('Failed to load sentence');
@@ -72,7 +52,7 @@ class _ListPageState extends State<ListPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_dataUrls.isEmpty) {
+    if (_dataList.isEmpty) {
       return Scaffold(
           appBar: AppBar(
             title: const Text("履歴"),
@@ -88,14 +68,15 @@ class _ListPageState extends State<ListPage> {
         ),
         body: ListView(
           children: <Widget>[
-            for (var urlKey in _dataUrls.keys.toList())
+            for (var data in _dataList)
               GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => DetailScreen(dataUrl: _dataUrls[urlKey]["url"])),
+                    MaterialPageRoute(builder: (context) => DetailScreen(dataUrl: data["lists"].last["url"])),
                   );
                 },
+                /*
                 onLongPress: () async {
                   _longPressFlag = true;
                   while (_longPressFlag) {
@@ -119,7 +100,8 @@ class _ListPageState extends State<ListPage> {
                     _longPressFlag = false;
                   });
                 },
-                child: QuakeListCard(_dataUrls[urlKey]),
+                 */
+                child: QuakeEListCard(data),
               )
           ],
         ),
