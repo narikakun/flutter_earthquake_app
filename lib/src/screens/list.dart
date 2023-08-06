@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:earthquake_app/src/screens/detail.dart';
-import 'package:earthquake_app/src/utils/SampleData.dart';
-import 'package:earthquake_app/src/widget/QuakeListCard.dart';
+import 'package:earthquake_app/src/screens/listFilter.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -31,13 +30,13 @@ class _ListPageState extends State<ListPage> {
     final response = await http.get(Uri.parse(
         'https://earthquake-api-v2.nakn.jp/api/v2/list?limit=10'));
     if (response.statusCode == 200) {
-      Map<String, dynamic> sentences =
+      Map<String, dynamic> dataJson =
       jsonDecode(utf8.decode(response.bodyBytes));
       setState(() {
-        _dataList = sentences["items"];
+        _dataList = dataJson["items"];
       });
     } else {
-      throw Exception('Failed to load sentence');
+      throw Exception('Failed to load dataJson');
     }
   }
 
@@ -46,9 +45,6 @@ class _ListPageState extends State<ListPage> {
     super.initState();
     fetchSentence();
   }
-
-  bool _longPressFlag = false;
-  int _counter = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +61,17 @@ class _ListPageState extends State<ListPage> {
         appBar: AppBar(
           title: const Text("履歴"),
           elevation: 1,
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.filter_list),
+              onPressed: () => {
+              Navigator.push(
+                context,
+                  MaterialPageRoute(builder: (context) => ListFilterScreen()),
+                )
+              },
+            ),
+          ],
         ),
         body: ListView(
           children: <Widget>[
@@ -76,31 +83,6 @@ class _ListPageState extends State<ListPage> {
                     MaterialPageRoute(builder: (context) => DetailScreen(dataUrl: data["lists"].last["url"])),
                   );
                 },
-                /*
-                onLongPress: () async {
-                  _longPressFlag = true;
-                  while (_longPressFlag) {
-                    _counter++;
-                    if (_counter > 5) {
-                      setState(() {
-                        _dataUrls["int3"] = getSampleInt3();
-                        _dataUrls["int4"] = getSampleInt4();
-                        _dataUrls["int5-"] = getSampleInt5M();
-                        _dataUrls["int5+"] = getSampleInt5S();
-                        _dataUrls["int6+"] = getSampleInt6S();
-                      });
-                    }
-                    //目で追える速さで進行させる為待機処理を追加する
-                    await Future.delayed(const Duration(milliseconds: 1000));
-                  }
-                },
-                onLongPressEnd: (detail) {
-                  setState((){
-                    _counter = 0;
-                    _longPressFlag = false;
-                  });
-                },
-                 */
                 child: QuakeEListCard(data),
               )
           ],
