@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -26,12 +27,20 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Map<String, dynamic> _earthquakeData = {};
+
+  late Timer fetchTimer;
+
   void fetchLastEarthquake() async {
+    if (!mounted) {
+      fetchTimer.cancel();
+      return;
+    }
     final response = await http.get(Uri.parse(
         'https://dev.narikakun.net/webapi/earthquake/post_data.json'));
     if (response.statusCode == 200) {
       Map<String, dynamic> sentences =
       jsonDecode(utf8.decode(response.bodyBytes));
+      print(sentences["Head"]["JsonUrl"]);
       setState(() {
         _earthquakeData = sentences;
       });
@@ -44,6 +53,9 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     fetchLastEarthquake();
+    fetchTimer = Timer.periodic(const Duration(seconds: 5), (_) {
+      fetchLastEarthquake();
+    });
   }
 
   @override
@@ -57,25 +69,19 @@ class _HomePageState extends State<HomePage> {
         body: createProgressIndicator()
       );
     }
-    String title = _earthquakeData["Control"]["Title"];
     return Scaffold(
       appBar: AppBar(
         title: const Text("最新の地震情報"),
         elevation: 1,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          fetchLastEarthquake();
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            QuakeListCard(_earthquakeData),
-            Expanded(
-              child: EarthquakeMap(data: _earthquakeData),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          QuakeListCard(_earthquakeData),
+          Expanded(
+            child: EarthquakeMap(data: _earthquakeData),
+          ),
+        ],
       ),
     );
   }
