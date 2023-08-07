@@ -131,7 +131,10 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
       }
     }
     markers.addAll(areaMarkers);
-    bounds = LatLngBounds.fromPoints(latlngPoints);
+    LatLngBounds bounds1 = LatLngBounds.fromPoints(latlngPoints);
+    LatLng sw = bounds1.southWest;
+    LatLng ne = bounds1.northEast;
+    bounds = LatLngBounds(LatLng(sw.latitude - 0.2, sw.longitude - 0.2), LatLng(ne.latitude + 0.2, ne.longitude + 0.2));
   }
 
   @override
@@ -156,7 +159,7 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
             onPositionChanged: (position, bo) {
               setMapView(position.zoom);
             },
-            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag,
+            interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag | InteractiveFlag.doubleTapZoom,
           ),
           nonRotatedChildren: [
             RichAttributionWidget(
