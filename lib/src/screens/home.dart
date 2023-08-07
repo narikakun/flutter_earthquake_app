@@ -40,7 +40,6 @@ class _HomePageState extends State<HomePage> {
     if (response.statusCode == 200) {
       Map<String, dynamic> sentences =
       jsonDecode(utf8.decode(response.bodyBytes));
-      print(sentences["Head"]["JsonUrl"]);
       setState(() {
         _earthquakeData = sentences;
       });
