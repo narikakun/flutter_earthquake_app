@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Map<String, dynamic> _earthquakeData = {};
-  void fetchSentence() async {
+  void fetchLastEarthquake() async {
     final response = await http.get(Uri.parse(
         'https://dev.narikakun.net/webapi/earthquake/post_data.json'));
     if (response.statusCode == 200) {
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchSentence();
+    fetchLastEarthquake();
   }
 
   @override
@@ -59,11 +59,15 @@ class _HomePageState extends State<HomePage> {
     }
     String title = _earthquakeData["Control"]["Title"];
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("最新の地震情報"),
-          elevation: 1,
-        ),
-        body: Column(
+      appBar: AppBar(
+        title: const Text("最新の地震情報"),
+        elevation: 1,
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          fetchLastEarthquake();
+        },
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             QuakeListCard(_earthquakeData),
@@ -72,6 +76,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
     );
   }
 }

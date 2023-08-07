@@ -28,7 +28,7 @@ class _ListPageState extends State<ListPage> {
   Map<String, dynamic> _dataJson = {};
   String _minInt = "1";
 
-  void fetchSentence() async {
+  void fetchList() async {
     final response = await http.get(Uri.parse(
         'https://earthquake-api-v2.nakn.jp/api/v2/list?limit=10&minInt=$_minInt'));
     if (response.statusCode == 200) {
@@ -45,7 +45,7 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-    fetchSentence();
+    fetchList();
   }
 
   @override
@@ -60,24 +60,28 @@ class _ListPageState extends State<ListPage> {
       );
     }
     return Scaffold(
-        appBar: AppBar(
-          title: const Text("履歴"),
-          elevation: 1,
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.filter_list),
-              onPressed: () async {
-                var result = await Navigator.push(
-                  context,
-                    MaterialPageRoute(builder: (context) => ListFilterScreen(minIntStr: _minInt)),
-                  );
-                _minInt = result["minInt"];
-                fetchSentence();
-              },
-            ),
-          ],
-        ),
-        body: ListView(
+      appBar: AppBar(
+        title: const Text("履歴"),
+        elevation: 1,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.filter_list),
+            onPressed: () async {
+              var result = await Navigator.push(
+                context,
+                  MaterialPageRoute(builder: (context) => ListFilterScreen(minIntStr: _minInt)),
+                );
+              _minInt = result["minInt"];
+              fetchList();
+            },
+          ),
+        ],
+      ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          fetchList();
+        },
+        child: ListView(
           children: <Widget>[
             for (var data in _dataJson["items"])
               GestureDetector(
@@ -91,6 +95,7 @@ class _ListPageState extends State<ListPage> {
               )
           ],
         ),
+      ),
     );
   }
 }
