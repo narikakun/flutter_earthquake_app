@@ -39,6 +39,7 @@ dependencies:
   http: ^1.1.0
   intl: ^0.18.1
   url_launcher: ^6.1.12
+  flutter_launcher_icons: ^0.13.1
 
 dev_dependencies:
   flutter_test:
@@ -112,3 +113,23 @@ flutter:
     - assets/int/int7.png
     - assets/int/int8.png
     - assets/int/int9.png
+
+flutter_launcher_icons:
+  image_path_android: "assets/logo/logo_android.png"
+  image_path_ios: "assets/logo/logo_ios.png"
+  android: true
+  ios: true
+  adaptive_icon_background: "#ffffff"
+  remove_alpha_ios: true
+  background_color_ios: "#ffffff"
+  web:
+    generate: true
+    image_path: "assets/logo/logo_ios.png"
+    background_color: "#ffffff"
+    theme_color: "#f4b657"
+  windows:
+    generate: true
+    image_path: "assets/logo/logo_ios.png"
+  macos:
+    generate: true
+    image_path: "assets/logo/logo_ios.png"
