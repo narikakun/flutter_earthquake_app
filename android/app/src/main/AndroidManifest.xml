@@ -3,6 +3,14 @@
         android:label="EQua"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_quakeinfo"
+            android:value="@string/default_notification_channel_quakeinfo"/>
+        <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_stat_logo" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/symbolColor" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -22,9 +30,6 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <meta-data
-                android:name="com.google.firebase.messaging.default_notification_channel_quakeinfo"
-                android:value="@string/default_notification_channel_quakeinfo"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

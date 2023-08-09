@@ -19,6 +19,7 @@ void main() async {
     sound: true
   );
   await FirebaseMessaging.instance.subscribeToTopic("quakeInfo");
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   FirebaseMessaging.onMessage.listen(firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }
