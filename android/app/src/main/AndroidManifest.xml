@@ -8,6 +8,24 @@
             android:value="@string/default_notification_channel_quakeinfo"/>
         <meta-data android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_stat_logo" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int1"
+            android:resource="@drawable/int_s1" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int2"
+            android:resource="@drawable/int_s2" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int3"
+            android:resource="@drawable/int_s3" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int4"
+            android:resource="@drawable/int_s4" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int5"
+            android:resource="@drawable/int_s5" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int6"
+            android:resource="@drawable/int_s6" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int7"
+            android:resource="@drawable/int_s7" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int8"
+            android:resource="@drawable/int_s8" />
+        <meta-data android:name="com.google.firebase.messaging.icon_int9"
+            android:resource="@drawable/int_s9" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/symbolColor" />

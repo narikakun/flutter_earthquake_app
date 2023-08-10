@@ -57,7 +57,7 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
 
   void setMapData() async {
     data = widget.data;
-    if (!data["Body"]["Earthquake"].isEmpty) {
+    if (data["Body"]["Earthquake"] != null) {
       hypoLat =
           double.parse(data["Body"]["Earthquake"]["Hypocenter"]["Latitude"]);
       hypoLng =
@@ -78,7 +78,7 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
       hypoLat = 35.7102;
       hypoLng = 139.8132;
     }
-    if (!data["Body"]["Intensity"].isEmpty) {
+    if (data["Body"]["Intensity"] != null) {
       for (var pref in data["Body"]["Intensity"]["Observation"]["Pref"]) {
         for (var area in pref["Area"]) {
           List<double>? getAreaLocation = AreaForecastLocalELocation(area["Code"]);
