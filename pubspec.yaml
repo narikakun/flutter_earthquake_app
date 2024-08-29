@@ -38,7 +38,7 @@ dependencies:
   flutter_map: ^5.0.0
   http: ^1.1.0
   intl: ^0.18.1
-  url_launcher: ^6.1.12
+  url_launcher: ^6.3.0
   flutter_launcher_icons: ^0.13.1
   firebase_core: ^3.4.0
   firebase_messaging:  ^15.1.0
