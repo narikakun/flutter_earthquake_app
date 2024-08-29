@@ -47,6 +47,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   await FirebaseMessaging.instance.requestPermission(
     alert: true,
