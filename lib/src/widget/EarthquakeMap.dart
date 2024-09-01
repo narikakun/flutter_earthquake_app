@@ -3,6 +3,7 @@ import 'package:earthquake_app/src/widget/createProgressIndicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/AreaInformationCityLocation.dart';
 import '../utils/ParseIntImage.dart';
@@ -160,11 +161,12 @@ class _EarthquakeMapState extends State<EarthquakeMap> {
             },
             interactiveFlags: InteractiveFlag.pinchZoom | InteractiveFlag.drag | InteractiveFlag.doubleTapZoom,
           ),
-          nonRotatedChildren: const [
+          nonRotatedChildren: [
             RichAttributionWidget(
               attributions: [
                 TextSourceAttribution(
                   'OpenStreetMap contributors',
+                  onTap: () => launchUrl(Uri.parse('https://openstreetmap.org/copyright')),
                 ),
               ],
             ),
