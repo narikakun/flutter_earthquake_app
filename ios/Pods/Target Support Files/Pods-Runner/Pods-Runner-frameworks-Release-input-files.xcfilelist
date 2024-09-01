@@ -9,4 +9,3 @@ ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/flutter_local_notifications/flutter_local_notifications.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework
 ${BUILT_PRODUCTS_DIR}/path_provider_foundation/path_provider_foundation.framework
-${BUILT_PRODUCTS_DIR}/url_launcher_ios/url_launcher_ios.framework
